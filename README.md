@@ -198,7 +198,7 @@ Open the local_rules.xml (_/var/ossec/etc/rules/local_rules.xml_) file in the Wa
 </group>
 ```
 
-Now open the server config file `/var/ossec/etc/ossec.conf` and paste the below into the bottom of the file, replacing `OUR_VIRUS_TOTAL_API_KEY>` with your [Virus Total API Key](https://docs.virustotal.com/reference/overview).
+Now open the server config file `/var/ossec/etc/ossec.conf` and paste the below into the bottom of the file, replacing `YOUR_VIRUS_TOTAL_API_KEY` with your [Virus Total API Key](https://docs.virustotal.com/reference/overview).
 ```
 <ossec_config>
   <integration>
