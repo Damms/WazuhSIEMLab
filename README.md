@@ -11,12 +11,13 @@ The Wazuh SIEM Lab project aimed to establish a controlled environment for simul
 - Ability to generate and recognize attack signatures and patterns.
 - Enhanced knowledge of network protocols and security vulnerabilities.
 - Development of critical thinking and problem-solving skills in cybersecurity.
+- Integration of third party intelligence for automated response.
 
 ### Tools Used
 
-- Security Information and Event Management (SIEM) system for log ingestion and analysis.
-- Network analysis tools (such as Wireshark) for capturing and examining network traffic.
+- Wazuh Security Information and Event Management (SIEM) system for log ingestion and analysis.
 - Telemetry generation tools to create realistic network traffic and attack scenarios.
+- Virus Total integration for automated response.
 
 ### Prerequisites 
 Virtual machines, I am using [VMWare Workstation Pro](https://www.vmware.com/products/workstation-pro/html.html), but [Virtual Box](https://www.virtualbox.org) is a free alternative.
