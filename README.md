@@ -68,7 +68,7 @@ Now refresh the Wazuh dashboard and see the new agent has been added successfull
 ![image](https://github.com/user-attachments/assets/93a517bb-34ad-4977-8d7a-f4b7e9c9923f)
 
 
-### Step 3: Enable vulnerability scanning 
+### Step 4: Enable vulnerability scanning 
 To enable vulnerability scanning we need to configure our Wazuh server. On the Wazuh Server navigate to the `/var/ossec/etc` directory. Here we want to open the ossec.conf file, this is our config file for the Wazuh server. Scroll down until you find vulnerability-detector and change it from _no_ to _yes_ ![image](https://github.com/user-attachments/assets/6a8c78e4-4f00-4a3e-aee8-89b2a362562f)
 
 Save and close the config file, then restart the Wazuh server `systemctl restart wazuh-manager`
