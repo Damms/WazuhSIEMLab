@@ -259,7 +259,7 @@ Now I can test this out and download a known [malicious TEST file](https://www.e
   <img src="https://github.com/user-attachments/assets/f98e4129-06fa-4f37-b44d-aa551e713451" />
 </p>
 
-
+I can see the malicious test file was automatically detected by virus total, which triggered my remove threat script to successfully delete the malicious file. 
 
 
 
