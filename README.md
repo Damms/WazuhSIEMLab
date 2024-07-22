@@ -57,8 +57,20 @@ Navigate to your Wazuh server ip address and login using the credentials generat
 
 ![image](https://github.com/user-attachments/assets/a0f00d79-41dc-478d-a564-9c70c8478eb6)
 
-Below example is the command I will use to install the Wazuh agent on another Windows VM
+Below example is the command I will use to install the Wazuh agent on another Windows VM via PowerShell
 `Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.7.4-1.msi -OutFile ${env.tmp}\wazuh-agent; msiexec.exe /i ${env.tmp}\wazuh-agent /q WAZUH_MANAGER='192.168.68.113' WAZUH_REGISTRATION_SERVER='192.168.68.113' `
+
+After installing the Wazuh agent on the VM of your choice start up the service, e.g. for my Windows VM `NET START WazuhSvc`
+
+Repeat this for as many Wazuh agents as you would like to add.
+
+Now refresh the Wazuh dashboard and see the new agent has been added successfully.
+![image](https://github.com/user-attachments/assets/93a517bb-34ad-4977-8d7a-f4b7e9c9923f)
+
+
+
+
+
 
 
 
