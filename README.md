@@ -25,14 +25,24 @@ Virtual machines, I am using [VMWare Workstation Pro](https://www.vmware.com/pro
 All up to date steps to setup Wazuh can be found using the [quickstart guide](https://documentation.wazuh.com/current/quickstart.html).
 ### Step 1: Create VM for Wazuh
 Spin up a VM for Ubuntu with resources aligning to the Wazuh documentation
-![image](https://github.com/user-attachments/assets/88af8182-fc9f-47d2-9413-8d78397d2f36)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/88af8182-fc9f-47d2-9413-8d78397d2f36" />
+</p>
 
 
 
 Below is my VM configuration
-![image](https://github.com/user-attachments/assets/09029662-a33e-4dc4-999d-53f7975dcf3c)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/09029662-a33e-4dc4-999d-53f7975dcf3c" />
+</p>
+
 
 
 ### Step 2: Install Wazuh
 Once Ubuntu is up and running install Wazuh using the below in the terminal
 ```curl -sO https://packages.wazuh.com/4.8/wazuh-install.sh && sudo bash ./wazuh-install.sh -a```
+
+
+
+![image](https://github.com/user-attachments/assets/88af8182-fc9f-47d2-9413-8d78397d2f36)
+![image](https://github.com/user-attachments/assets/09029662-a33e-4dc4-999d-53f7975dcf3c)
