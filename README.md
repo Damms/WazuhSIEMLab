@@ -41,7 +41,7 @@ Below is my VM configuration
 
 ### Step 2: Install Wazuh
 Once Ubuntu is up and running install Wazuh using the following
-  ```curl -sO https://packages.wazuh.com/4.8/wazuh-install.sh && sudo bash ./wazuh-install.sh -a```
+  ~~~curl -sO https://packages.wazuh.com/4.8/wazuh-install.sh && sudo bash ./wazuh-install.sh -a~~~
 
 When Wazuh has finished installing the admin password will be printed in the terminal, take note of this and login to your Wazuh dashboard on any browser by typing in your device ip or local host.
 ![image](https://github.com/user-attachments/assets/c2a467ca-4577-48b5-89de-e7d04fb647f0)
