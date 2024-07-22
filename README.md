@@ -2,7 +2,7 @@
 
 ## Objective
 
-The Wazuh SIEM Lab project aimed to establish a controlled environment for simulating and detecting cyber attacks based on the [YouTube video by John Hammond](https://youtu.be/i68atPbB8uQ?si=dYoGtUtZLdhDnjwI). The primary focus was to ingest and analyze logs within a Security Information and Event Management (SIEM) system, generating test telemetry to mimic real-world attack scenarios. This hands-on experience was designed to deepen understanding of network security, attack patterns, and defensive strategies.
+The Wazuh SIEM Lab project aimed to establish a controlled environment for simulating and detecting cyber attacks based on the [YouTube video by John Hammond](https://youtu.be/i68atPbB8uQ?si=dYoGtUtZLdhDnjwI). The primary focus was to ingest and analyze logs within a Security Information and Event Management (SIEM) system, generating test telemetry to mimic real-world attack scenarios, integrate open source intelligence and automate response. This hands-on experience was designed to deepen understanding of network security, attack patterns, and defensive strategies.
 
 ![image](https://github.com/user-attachments/assets/b7a90e1f-022d-42db-9d04-5fd3219f4b31)
 
@@ -14,19 +14,21 @@ The Wazuh SIEM Lab project aimed to establish a controlled environment for simul
 - Ability to generate and recognize attack signatures and patterns.
 - Enhanced knowledge of network protocols and security vulnerabilities.
 - Development of critical thinking and problem-solving skills in cybersecurity.
-- Integration of third party intelligence for automated response.
+- Integration of open source intelligence.
+- Automated response
 
 ### Tools Used
 
 - Wazuh Security Information and Event Management (SIEM) system for log ingestion and analysis.
 - Telemetry generation tools to create realistic network traffic and attack scenarios.
-- Virus Total integration for automated response.
+- Virus Total integration for open source intelligence.
+- MITRE ATT&CK Framework
 
 ### Prerequisites 
 Virtual machines, I am using [VMWare Workstation Pro](https://www.vmware.com/products/workstation-pro/html.html), but [Virtual Box](https://www.virtualbox.org) is a free alternative.
 
 ## Steps
-All up to date steps to setup Wazuh can be found using the [quickstart guide](https://documentation.wazuh.com/current/quickstart.html).
+All up to date steps to setup Wazuh can be found using the [quickstart](https://documentation.wazuh.com/current/quickstart.html) and the [proof of concept](https://documentation.wazuh.com/current/proof-of-concept-guide/index.html) guides.
 
 ### Step 1: Create VM for Wazuh Server
 Spin up a VM for Ubuntu with resources aligning to the Wazuh documentation
@@ -55,7 +57,7 @@ When Wazuh has finished installing the admin password will be printed in the ter
 _Note down the device's ip address, this will be needed when setting up Wazuh agents_
 
 ### Step 3: Add Wazuh Agent
-Now we can install a Wazuh Agent into another VM to start sending information back for our Wazuh server.
+Now I can install a Wazuh Agent into another VM to start sending information back for our Wazuh server.
 
 Navigate to the Wazuh server ip address using any browser and login using the credentials generated in step 2. Once logged into the Wazuh dashboard click on "Add Agents", then follow the wizard to get the command to install.
 
@@ -73,14 +75,14 @@ Now refresh the Wazuh dashboard and see the new agent has been added successfull
 
 
 ### Step 4: Enable vulnerability detection 
-To enable vulnerability detection we need to configure our Wazuh server. On the Wazuh Server navigate to the `/var/ossec/etc` directory. Here we want to open the ossec.conf file, this is our config file for the Wazuh server. Scroll down until you find vulnerability-detector and change it from _no_ to _yes_ ![image](https://github.com/user-attachments/assets/6a8c78e4-4f00-4a3e-aee8-89b2a362562f)
+To enable vulnerability detection I need to configure the Wazuh server. On the Wazuh Server navigate to the `/var/ossec/etc` directory. Here I want to open the ossec.conf file, this is the config file for the Wazuh server. Scroll down until you find vulnerability-detector and change it from _no_ to _yes_ ![image](https://github.com/user-attachments/assets/6a8c78e4-4f00-4a3e-aee8-89b2a362562f)
 
 Save and close the config file, then restart the Wazuh server `systemctl restart wazuh-manager`
 
 
 
 ### Step 5: Create some security events!
-Now it's time to be creative and do what you need to create some security events, for me I will achieve this by using [ninite](https://ninite.com/) to download a bunch of applications.
+Now it's time to be creative and do what you need to create some security events, I will achieve this by using [ninite](https://ninite.com/) to download a bunch of applications.
 
 According to the config file, Wazuh should interval scan for vulnerabilities every 5 mins. After downloading a bunch of applications on my Windows VM there is alot of vulnerabilites found!
 
@@ -88,7 +90,7 @@ According to the config file, Wazuh should interval scan for vulnerabilities eve
 
 On my ubuntu VM I can install [Invoke Atomic](https://github.com/redcanaryco/invoke-atomicredteam/wiki) and simulate some real attacks to create more events.
 
-Once Invoke Atomic has downloaded we can start to simulate attacks! Go into the Wazuh dashboard and you can use the MITRE ATT&CK framework to find attacks.
+Once Invoke Atomic has downloaded I can start to simulate attacks! I went into the Wazuh dashboard and used the MITRE ATT&CK framework to find attacks.
 
 ![image](https://github.com/user-attachments/assets/07e10ed5-c2a3-4d93-a285-45b03743d208)
 
@@ -102,9 +104,9 @@ These events can also be viewed in Wazuh
 
 ### Step 6: Create automated response | Wazuh Agent
 
-Now we will use [Wazuh Virus Total integration](https://documentation.wazuh.com/current/user-manual/capabilities/malware-detection/virus-total-integration.html) to add file integrity monitoring and automatically respond.
+Now I will use [Wazuh Virus Total integration](https://documentation.wazuh.com/current/user-manual/capabilities/malware-detection/virus-total-integration.html) to add file integrity monitoring and automatically respond.
 
-We will have to add a active response script to the Wazuh agent to remove malicious files.
+I added a active response script to the Wazuh agent to remove malicious files.
 
 _The below steps modifying the Wazuh agent config can be done via the Wazuh dashboard too_
 In the Wazuh Agent (Ubuntu) navigate to /var/ossec/etc and open the ossec.conf file.
@@ -176,7 +178,7 @@ Navitgate to the Wazuh dashboard and go into settings > modules and enable the V
 ![image](https://github.com/user-attachments/assets/d4532b9a-299b-45f9-9882-724a92a6260c)
 
 
-Now that the script to remove malicious files is added to the Wazuh agent we must configure the Wazuh server to alert for any changes made in the endpoint directories, enable VirusTotal integration and trigger the remove threat script if a malicious file is detected.
+Now that the script to remove malicious files is added to the Wazuh agent I must configure the Wazuh server to alert for any changes made in the endpoint directories, enable VirusTotal integration and trigger the remove threat script if a malicious file is detected.
 
 Open the local_rules.xml (_/var/ossec/etc/rules/local_rules.xml_) file in the Wazuh server and add the below rules that alert for changes in the /home/user/Downloads directory.
 
