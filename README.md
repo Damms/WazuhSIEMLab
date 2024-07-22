@@ -100,9 +100,11 @@ Follow the below commands to invoke this attack on the ubuntu machince.
 
 These events can also be viewed in Wazuh
 
-### Step 6: Create automated response
+### Step 6: Create automated response | Wazuh Agent
 
 Now we will use [Wazuh Virus Total integration](https://documentation.wazuh.com/current/user-manual/capabilities/malware-detection/virus-total-integration.html) to add file integrity monitoring and automatically respond.
+
+We will have to add a active response script to the Wazuh agent to remove malicious files.
 
 _The below steps modifying the Wazuh agent config can be done via the Wazuh dashboard too_
 In the Wazuh Agent (Ubuntu) navigate to /var/ossec/etc and open the ossec.conf file.
@@ -164,18 +166,88 @@ Change the file ownership and permissions
 sudo chmod 750 /var/ossec/active-response/bin/remove-threat.sh
 sudo chown root:wazuh /var/ossec/active-response/bin/remove-threat.sh
 ```
-Now we can restart the Wazuh agent
+Restart the Wazuh agent
 
 `sudo systemctl restart wazuh-agent`
 
+### Step 7: Create automated response | Wazuh server
+
+Navitgate to the Wazuh dashboard and go into settings > modules and enable the VirusTotal integration under the Threat Detection and response section.
+![image](https://github.com/user-attachments/assets/d4532b9a-299b-45f9-9882-724a92a6260c)
 
 
+Now that the script to remove malicious files is added to the Wazuh agent we must configure the Wazuh server to alert for any changes made in the endpoint directories, enable VirusTotal integration and trigger the remove threat script if a malicious file is detected.
+
+Open the local_rules.xml (_/var/ossec/etc/rules/local_rules.xml_) file in the Wazuh server and add the below rules that alert for changes in the /home/user/Downloads directory.
+
+```
+<group name="syscheck,pci_dss_11.5,nist_800_53_SI.7,">
+    <!-- Rules for Linux systems -->
+    <rule id="100200" level="7">
+        <if_sid>550</if_sid>
+        <field name="file">/home/user/Downloads</field>
+        <description>File modified in /home/user/Downloads directory.</description>
+    </rule>
+    <rule id="100201" level="7">
+        <if_sid>554</if_sid>
+        <field name="file">/home/user/Downloads</field>
+        <description>File added to /home/user/Downloads directory.</description>
+    </rule>
+</group>
+```
+
+Now open the server config file `/var/ossec/etc/ossec.conf` and paste the below into the bottom of the file, replacing `OUR_VIRUS_TOTAL_API_KEY>` with your [Virus Total API Key](https://docs.virustotal.com/reference/overview).
+```
+<ossec_config>
+  <integration>
+    <name>virustotal</name>
+    <api_key><YOUR_VIRUS_TOTAL_API_KEY></api_key> <!-- Replace with your VirusTotal API key -->
+    <rule_id>100200,100201</rule_id>
+    <alert_format>json</alert_format>
+  </integration>
+</ossec_config>
+```
 
 
+Also add the below into the config file to trigger the remove-threat script whenever VirusTotal finds a malicious file
+```
+<ossec_config>
+  <command>
+    <name>remove-threat</name>
+    <executable>remove-threat.sh</executable>
+    <timeout_allowed>no</timeout_allowed>
+  </command>
 
+  <active-response>
+    <disabled>no</disabled>
+    <command>remove-threat</command>
+    <location>local</location>
+    <rules_id>87105</rules_id>
+  </active-response>
+</ossec_config>
+```
 
+Lastly add the below to the local_rules.xml file to report on the remove threat script outcome then restart the Wazuh server.
+```
+<group name="virustotal,">
+  <rule id="100092" level="12">
+    <if_sid>657</if_sid>
+    <match>Successfully removed threat</match>
+    <description>$(parameters.program) removed threat located at $(parameters.alert.data.virustotal.source.file)</description>
+  </rule>
 
+  <rule id="100093" level="12">
+    <if_sid>657</if_sid>
+    <match>Error removing threat</match>
+    <description>Error removing threat located at $(parameters.alert.data.virustotal.source.file)</description>
+  </rule>
+</group>
+```
+```
+sudo systemctl restart wazuh-manager
+```
 
+Now we can test this out and download a known [malicious TEST file](https://www.eicar.org/download-anti-malware-testfile/) from eicar and view the results!
 
 
 
