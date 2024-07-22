@@ -247,7 +247,18 @@ Lastly add the below to the local_rules.xml file to report on the remove threat 
 sudo systemctl restart wazuh-manager
 ```
 
-Now we can test this out and download a known [malicious TEST file](https://www.eicar.org/download-anti-malware-testfile/) from eicar and view the results!
+Now I can test this out and download a known [malicious TEST file](https://www.eicar.org/download-anti-malware-testfile/) from eicar and view the results!
+
+<p align="left">
+  <img src="https://github.com/user-attachments/assets/fcfa8613-0797-4fbc-a6f8-dee2a7cad9a8" />
+</p>
+
+<p align="left">
+  <img src="https://github.com/user-attachments/assets/f98e4129-06fa-4f37-b44d-aa551e713451" />
+</p>
+
+
+
 
 
 
