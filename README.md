@@ -43,9 +43,9 @@ Once Ubuntu is up and running install Wazuh using the following
   ```curl -sO https://packages.wazuh.com/4.8/wazuh-install.sh && sudo bash ./wazuh-install.sh -a```
 
 When Wazuh has finished installing the admin password will be printed in the terminal, take note of this and login to your Wazuh dashboard on any browser by typing in your device ip or local host.
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/af8ddddd-3083-4f9c-aa24-6013f8d67c53/>
-</p>
+![image](https://github.com/user-attachments/assets/c2a467ca-4577-48b5-89de-e7d04fb647f0)
+
+
 
 _Note down the device's ip address, this will be needed when setting up Wazuh agents_
 
