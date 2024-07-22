@@ -78,4 +78,8 @@ Save and close the config file, then restart the Wazuh server `systemctl restart
 ### Step 5: Create some security events!
 Now it's time to be creative and do what you need to create some security events, for me I will achieve this by using [ninite](https://ninite.com/) to download a bunch of applications.
 
+According to the config file, Wazuh should interval scan for vulnerabilities every 5 mins. After downloading a bunch of applications on my Windows VM there is alot of vulnerabilites found!
+
+![image](https://github.com/user-attachments/assets/6d1a406c-2b1a-4e58-94d7-b8cebd8ceb5a)
+
 
