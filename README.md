@@ -41,7 +41,7 @@ Below is my VM configuration
 
 ### Step 2: Install Wazuh
 Once Ubuntu is up and running install Wazuh using the following
-`curl -sO https://packages.wazuh.com/4.8/wazuh-install.sh && sudo bash ./wazuh-install.sh -a `
+```curl -sO https://packages.wazuh.com/4.8/wazuh-install.sh && sudo bash ./wazuh-install.sh -a ```
 
 When Wazuh has finished installing the admin password will be printed in the terminal, take note of this and login to your Wazuh dashboard on any browser by typing in your device ip or local host.
 ![image](https://github.com/user-attachments/assets/c2a467ca-4577-48b5-89de-e7d04fb647f0)
@@ -58,7 +58,7 @@ Navigate to your Wazuh server ip address and login using the credentials generat
 ![image](https://github.com/user-attachments/assets/a0f00d79-41dc-478d-a564-9c70c8478eb6)
 
 Below example is the command I will use to install the Wazuh agent on another Windows VM
-~~~Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.7.4-1.msi -OutFile ${env.tmp}\wazuh-agent; msiexec.exe /i ${env.tmp}\wazuh-agent /q WAZUH_MANAGER='192.168.68.113' WAZUH_REGISTRATION_SERVER='192.168.68.113' ~~~
+`Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.7.4-1.msi -OutFile ${env.tmp}\wazuh-agent; msiexec.exe /i ${env.tmp}\wazuh-agent /q WAZUH_MANAGER='192.168.68.113' WAZUH_REGISTRATION_SERVER='192.168.68.113' `
 
 
 
