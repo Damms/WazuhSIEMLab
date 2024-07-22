@@ -83,4 +83,29 @@ According to the config file, Wazuh should interval scan for vulnerabilities eve
 
 ![image](https://github.com/user-attachments/assets/6d1a406c-2b1a-4e58-94d7-b8cebd8ceb5a)
 
+On my ubuntu VM I can install [Invoke Atomic](https://github.com/redcanaryco/invoke-atomicredteam/wiki) and simulate some real attacks to create more events.
+
+Once Invoke Atomic has downloaded we can start to simulate attacks! Go into the Wazuh dashboard and you can use the MITRE ATT&CK framework to find attacks.
+
+![image](https://github.com/user-attachments/assets/07e10ed5-c2a3-4d93-a285-45b03743d208)
+
+Here I will try [T1003.008](https://attack.mitre.org/techniques/T1003/008/) you can click on this in Wazuh to get som more information on the attack.
+![image](https://github.com/user-attachments/assets/be1bc578-d334-444b-9d4f-50b7730cadb0)
+
+Follow the below commands to invoke this attack on the ubuntu machince.
+```Invoke-AtomicTest``` followed by the technique ID ```T1003.008``` and then <enter>
+
+These events can also be viewed in Wazuh
+
+### Step 6: Create automated response
+
+
+
+
+
+
+
+
+
+
 
