@@ -4,6 +4,9 @@
 
 The Wazuh SIEM Lab project aimed to establish a controlled environment for simulating and detecting cyber attacks based on the [YouTube video by John Hammond](https://youtu.be/i68atPbB8uQ?si=dYoGtUtZLdhDnjwI). The primary focus was to ingest and analyze logs within a Security Information and Event Management (SIEM) system, generating test telemetry to mimic real-world attack scenarios. This hands-on experience was designed to deepen understanding of network security, attack patterns, and defensive strategies.
 
+![image](https://github.com/user-attachments/assets/b7a90e1f-022d-42db-9d04-5fd3219f4b31)
+
+
 ### Skills Learned
 
 - Advanced understanding of SIEM concepts and practical application.
@@ -89,7 +92,7 @@ Once Invoke Atomic has downloaded we can start to simulate attacks! Go into the 
 
 ![image](https://github.com/user-attachments/assets/07e10ed5-c2a3-4d93-a285-45b03743d208)
 
-Here I will try [T1003.008](https://attack.mitre.org/techniques/T1003/008/) you can click on this in Wazuh to get som more information on the attack.
+Here I will try [T1003.008](https://attack.mitre.org/techniques/T1003/008/) you can click on this in Wazuh to get some more information on the attack.
 ![image](https://github.com/user-attachments/assets/be1bc578-d334-444b-9d4f-50b7730cadb0)
 
 Follow the below commands to invoke this attack on the ubuntu machince.
@@ -98,6 +101,75 @@ Follow the below commands to invoke this attack on the ubuntu machince.
 These events can also be viewed in Wazuh
 
 ### Step 6: Create automated response
+
+Now we will use [Wazuh Virus Total integration](https://documentation.wazuh.com/current/user-manual/capabilities/malware-detection/virus-total-integration.html) to add file integrity monitoring and automatically respond.
+
+_The below steps modifying the Wazuh agent config can be done via the Wazuh dashboard too_
+In the Wazuh Agent (Ubuntu) navigate to /var/ossec/etc and open the ossec.conf file.
+
+Navigate to the file integrity monitoring section in the config file and add a new directory to monitor real time, in this case I will add the Downloads folder.
+```<directories realtime="yes">/home/user/Downloads</directories>```
+![image](https://github.com/user-attachments/assets/95ff5626-20ec-4517-b006-6743d9f0f7b5)
+
+Install jq
+```
+  sudo apt update
+  sudo apt -y install jq
+```
+Create a new bash script called _"remove-threat.sh"_ in the `/var/ossec/active-response/bin` directory with the below content saved in the script
+```
+#!/bin/bash
+
+LOCAL=`dirname $0`;
+cd $LOCAL
+cd ../
+
+PWD=`pwd`
+
+read INPUT_JSON
+FILENAME=$(echo $INPUT_JSON | jq -r .parameters.alert.data.virustotal.source.file)
+COMMAND=$(echo $INPUT_JSON | jq -r .command)
+LOG_FILE="${PWD}/../logs/active-responses.log"
+
+#------------------------ Analyze command -------------------------#
+if [ ${COMMAND} = "add" ]
+then
+ # Send control message to execd
+ printf '{"version":1,"origin":{"name":"remove-threat","module":"active-response"},"command":"check_keys", "parameters":{"keys":[]}}\n'
+
+ read RESPONSE
+ COMMAND2=$(echo $RESPONSE | jq -r .command)
+ if [ ${COMMAND2} != "continue" ]
+ then
+  echo "`date '+%Y/%m/%d %H:%M:%S'` $0: $INPUT_JSON Remove threat active response aborted" >> ${LOG_FILE}
+  exit 0;
+ fi
+fi
+
+# Removing file
+rm -f $FILENAME
+if [ $? -eq 0 ]; then
+ echo "`date '+%Y/%m/%d %H:%M:%S'` $0: $INPUT_JSON Successfully removed threat" >> ${LOG_FILE}
+else
+ echo "`date '+%Y/%m/%d %H:%M:%S'` $0: $INPUT_JSON Error removing threat" >> ${LOG_FILE}
+fi
+
+exit 0;
+
+```
+
+Change the file ownership and permissions 
+
+```
+sudo chmod 750 /var/ossec/active-response/bin/remove-threat.sh
+sudo chown root:wazuh /var/ossec/active-response/bin/remove-threat.sh
+```
+Now we can restart the Wazuh agent
+
+`sudo systemctl restart wazuh-agent`
+
+
+
 
 
 
