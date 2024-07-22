@@ -40,7 +40,7 @@ Below is my VM configuration
 
 ### Step 2: Install Wazuh
 Once Ubuntu is up and running install Wazuh using the below in the terminal
-```curl -sO https://packages.wazuh.com/4.8/wazuh-install.sh && sudo bash ./wazuh-install.sh -a```
+  ```curl -sO https://packages.wazuh.com/4.8/wazuh-install.sh && sudo bash ./wazuh-install.sh -a```
 
 
 
