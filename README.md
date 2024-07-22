@@ -53,7 +53,7 @@ _Note down the device's ip address, this will be needed when setting up Wazuh ag
 ### Step 3: Add Wazuh Agent
 Now we can install a Wazuh Agent into another VM to start sending information back for our Wazuh server.
 
-Navigate to your Wazuh server ip address and login using the credentials generated in step 2. Once logged into the Wazuh dashboard click on "Add Agents", then follow the wizard to get the command to install.
+Navigate to the Wazuh server ip address using any browser and login using the credentials generated in step 2. Once logged into the Wazuh dashboard click on "Add Agents", then follow the wizard to get the command to install.
 
 ![image](https://github.com/user-attachments/assets/a0f00d79-41dc-478d-a564-9c70c8478eb6)
 
