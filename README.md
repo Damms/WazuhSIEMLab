@@ -98,7 +98,7 @@ Here I will try [T1003.008](https://attack.mitre.org/techniques/T1003/008/) you 
 ![image](https://github.com/user-attachments/assets/be1bc578-d334-444b-9d4f-50b7730cadb0)
 
 Follow the below commands to invoke this attack on the ubuntu machince.
-```Invoke-AtomicTest``` followed by the technique ID ```T1003.008``` and then <enter>
+```Invoke-AtomicTest``` followed by the technique ID ```T1003.008``` and then _enter_
 
 These events can also be viewed in Wazuh
 
