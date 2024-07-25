@@ -144,7 +144,7 @@ Install jq
   sudo apt update
   sudo apt -y install jq
 ```
-Create a new bash script called _"remove-threat.sh"_ in the `/var/ossec/active-response/bin` directory with the below content saved in the script
+Create a new bash script called _"remove-threat.sh"_ in the `/var/ossec/active-response/bin` directory with the below content saved in the script, this script will remove the file specified in the JSON input.
 ```
 #!/bin/bash
 
