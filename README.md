@@ -30,6 +30,16 @@ Virtual machines, I am using [VMWare Workstation Pro](https://www.vmware.com/pro
 ## Steps
 All up to date steps to setup Wazuh can be found using the [quickstart](https://documentation.wazuh.com/current/quickstart.html) and the [proof of concept](https://documentation.wazuh.com/current/proof-of-concept-guide/index.html) guides.
 
+1. [Create VM for Wazuh Server](#part1)
+2. [Install Wazuh](#part2)
+3. [Add Wazuh Agent](#part3)
+4. [Enable vulnerability detection](#part4)
+5. [Create some security events!](#part5)
+6. [Create automated response | Wazuh Agent](#part6)
+7. [Create automated response | Wazuh server](#part7)
+
+
+<a id="part1"></a>
 ### Step 1: Create VM for Wazuh Server
 Spin up a VM for Ubuntu with resources aligning to the Wazuh documentation
 <p align="left">
@@ -45,6 +55,7 @@ Below is my VM configuration
 
 
 
+<a id="part2"></a>
 ### Step 2: Install Wazuh
 Once Ubuntu is up and running install Wazuh using the following
 ```
@@ -58,6 +69,7 @@ When Wazuh has finished installing the admin password will be printed in the ter
 
 _Note down the device's ip address, this will be needed when setting up Wazuh agents_
 
+<a id="part3"></a>
 ### Step 3: Add Wazuh Agent
 Now I can install a Wazuh Agent into another VM to start sending information back for our Wazuh server.
 
@@ -78,6 +90,7 @@ Now refresh the Wazuh dashboard and see the new agent has been added successfull
 ![image](https://github.com/user-attachments/assets/93a517bb-34ad-4977-8d7a-f4b7e9c9923f)
 
 
+<a id="part4"></a>
 ### Step 4: Enable vulnerability detection 
 To enable vulnerability detection I need to configure the Wazuh server. On the Wazuh Server navigate to the `/var/ossec/etc` directory. Here I want to open the ossec.conf file, this is the config file for the Wazuh server. Scroll down until you find vulnerability-detector and change it from _no_ to _yes_ ![image](https://github.com/user-attachments/assets/6a8c78e4-4f00-4a3e-aee8-89b2a362562f)
 
@@ -88,6 +101,7 @@ Save and close the config file, then restart the Wazuh server
 
 
 
+<a id="part5"></a>
 ### Step 5: Create some security events!
 Now it's time to be creative and do what you need to create some security events, I will achieve this by using [ninite](https://ninite.com/) to download a bunch of applications.
 
@@ -109,6 +123,7 @@ Follow the below commands to invoke this attack on the ubuntu machince.
 
 These events can also be viewed in Wazuh
 
+<a id="part6"></a>
 ### Step 6: Create automated response | Wazuh Agent
 
 Now I will use [Wazuh Virus Total integration](https://documentation.wazuh.com/current/user-manual/capabilities/malware-detection/virus-total-integration.html) to add file integrity monitoring and automatically respond.
@@ -183,6 +198,7 @@ Restart the Wazuh agent
   sudo systemctl restart wazuh-agent
 ```
 
+<a id="part7"></a>
 ### Step 7: Create automated response | Wazuh server
 
 Navitgate to the Wazuh dashboard and go into settings > modules and enable the VirusTotal integration under the Threat Detection and response section.
