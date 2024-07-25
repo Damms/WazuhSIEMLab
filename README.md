@@ -25,7 +25,7 @@ The Wazuh SIEM Lab project aimed to establish a controlled environment for simul
 - MITRE ATT&CK Framework
 
 ### Prerequisites 
-Virtual machines, I am using [VMWare Workstation Pro](https://www.vmware.com/products/workstation-pro/html.html), but [Virtual Box](https://www.virtualbox.org) is a free alternative.
+Hypervisor, I am using [VMWare Workstation Pro](https://www.vmware.com/products/workstation-pro/html.html), but [Virtual Box](https://www.virtualbox.org) is a free alternative.
 
 ## Steps
 All up to date steps to setup Wazuh can be found using the [quickstart](https://documentation.wazuh.com/current/quickstart.html) and the [proof of concept](https://documentation.wazuh.com/current/proof-of-concept-guide/index.html) guides.
