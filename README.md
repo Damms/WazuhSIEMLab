@@ -47,7 +47,9 @@ Below is my VM configuration
 
 ### Step 2: Install Wazuh
 Once Ubuntu is up and running install Wazuh using the following
-```curl -sO https://packages.wazuh.com/4.8/wazuh-install.sh && sudo bash ./wazuh-install.sh -a ```
+```
+  curl -sO https://packages.wazuh.com/4.8/wazuh-install.sh && sudo bash ./wazuh-install.sh -a
+```
 
 When Wazuh has finished installing the admin password will be printed in the terminal, take note of this and login to your Wazuh dashboard on any browser by typing in your device ip or local host.
 ![image](https://github.com/user-attachments/assets/c2a467ca-4577-48b5-89de-e7d04fb647f0)
@@ -64,7 +66,9 @@ Navigate to the Wazuh server ip address using any browser and login using the cr
 ![image](https://github.com/user-attachments/assets/a0f00d79-41dc-478d-a564-9c70c8478eb6)
 
 Below example is the command I will use to install the Wazuh agent on another Windows VM via PowerShell
-`Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.7.4-1.msi -OutFile ${env.tmp}\wazuh-agent; msiexec.exe /i ${env.tmp}\wazuh-agent /q WAZUH_MANAGER='192.168.68.113' WAZUH_REGISTRATION_SERVER='192.168.68.113' `
+```
+  Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.7.4-1.msi -OutFile ${env.tmp}\wazuh-agent; msiexec.exe /i ${env.tmp}\wazuh-agent /q WAZUH_MANAGER='192.168.68.113' WAZUH_REGISTRATION_SERVER='192.168.68.113'
+```
 
 After installing the Wazuh agent on the VM of your choice start up the service, e.g. for my Windows VM `NET START WazuhSvc`
 
@@ -77,7 +81,10 @@ Now refresh the Wazuh dashboard and see the new agent has been added successfull
 ### Step 4: Enable vulnerability detection 
 To enable vulnerability detection I need to configure the Wazuh server. On the Wazuh Server navigate to the `/var/ossec/etc` directory. Here I want to open the ossec.conf file, this is the config file for the Wazuh server. Scroll down until you find vulnerability-detector and change it from _no_ to _yes_ ![image](https://github.com/user-attachments/assets/6a8c78e4-4f00-4a3e-aee8-89b2a362562f)
 
-Save and close the config file, then restart the Wazuh server `systemctl restart wazuh-manager`
+Save and close the config file, then restart the Wazuh server 
+```
+  systemctl restart wazuh-manager
+```
 
 
 
@@ -112,7 +119,9 @@ _The below steps modifying the Wazuh agent config can be done via the Wazuh dash
 In the Wazuh Agent (Ubuntu) navigate to /var/ossec/etc and open the ossec.conf file.
 
 Navigate to the file integrity monitoring section in the config file and add a new directory to monitor real time, in this case I will add the Downloads folder.
-```<directories realtime="yes">/home/user/Downloads</directories>```
+```
+  <directories realtime="yes">/home/user/Downloads</directories>
+```
 ![image](https://github.com/user-attachments/assets/95ff5626-20ec-4517-b006-6743d9f0f7b5)
 
 Install jq
@@ -170,7 +179,9 @@ sudo chown root:wazuh /var/ossec/active-response/bin/remove-threat.sh
 ```
 Restart the Wazuh agent
 
-`sudo systemctl restart wazuh-agent`
+```
+  sudo systemctl restart wazuh-agent
+```
 
 ### Step 7: Create automated response | Wazuh server
 
